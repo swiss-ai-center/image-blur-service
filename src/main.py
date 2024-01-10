@@ -4,9 +4,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import RedirectResponse
 from common_code.config import get_settings
-from pydantic import Field
 from common_code.http_client import HttpClient
-from common_code.logger.logger import get_logger
+from common_code.logger.logger import get_logger, Logger
 from common_code.service.controller import router as service_router
 from common_code.service.service import ServiceService
 from common_code.storage.service import StorageService
@@ -37,8 +36,8 @@ class MyService(Service):
     """
 
     # Any additional fields must be excluded for Pydantic to work
-    model: object = Field(exclude=True)
-    logger: object = Field(exclude=True)
+    _model: object
+    _logger: Logger
 
     def __init__(self):
         super().__init__(
@@ -63,7 +62,7 @@ class MyService(Service):
             ],
             has_ai=False
         )
-        self.logger = get_logger(settings)
+        self._logger = get_logger(settings)
 
     def process(self, data):
         raw = data["image"].data
