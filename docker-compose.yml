@@ -13,13 +13,13 @@ services:
         pip install -r requirements.txt -r requirements-all.txt &&
         # Run the service
         cd src &&
-        uvicorn --reload --host 0.0.0.0 --port 9090 main:app
+        uvicorn --reload --host 0.0.0.0 --port 9091 main:app
       "
     environment:
       - ENGINE_URLS=["http://host.docker.internal:8080"]
-      - SERVICE_URL=http://host.docker.internal:9090
+      - SERVICE_URL=http://host.docker.internal:9091
     ports:
-      - 9090:9090
+      - 9091:9091
     working_dir: /workspaces/service
     volumes:
       - .:/workspaces/service
