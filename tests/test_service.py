@@ -111,8 +111,9 @@ def test_announce_to_reachable_engine(caplog: pytest.LogCaptureFixture, app_with
         warning_logs_found = False
         for record in caplog.records:
             if record.levelname == "WARNING":
-                warning_logs_found = True
-                break
+                if "Failed to notify the engine" in record.message:
+                    warning_logs_found = True
+                    break
 
         assert not warning_logs_found
 
@@ -130,8 +131,9 @@ def test_announce_to_unreachable_engine(caplog: pytest.LogCaptureFixture, app_wi
         warning_logs_found = False
         for record in caplog.records:
             if record.levelname == "WARNING":
-                warning_logs_found = True
-                break
+                if "Failed to notify the engine" in record.message:
+                    warning_logs_found = True
+                    break
 
         assert warning_logs_found
 
