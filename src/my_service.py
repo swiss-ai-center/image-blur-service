@@ -93,4 +93,3 @@ class MyService(Service):
         return {
             "result": task_data
         }
-
